@@ -42,6 +42,8 @@ dependencies:
   firebase_auth: ^4.2.8
   cloud_firestore: ^4.4.2
   flutter_feather_icons: ^2.0.0+1
+  flutter_zoom_drawer: ^3.0.3
+  hidden_drawer_menu: ^3.0.1
 
 dev_dependencies:
   flutter_test:

@@ -33,7 +33,6 @@ class AuthProvider with ChangeNotifier {
     return;
   }
 
-
   bool _containsCharacter = false;
   bool _containsUpperLower = false;
   bool _containsNumerics = false; 

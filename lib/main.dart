@@ -5,11 +5,12 @@ import "package:firebase_core/firebase_core.dart";
 import "package:pocket_pal/providers/onboard_provider.dart";
 import "package:pocket_pal/providers/theme_manager_provider.dart";
 import "package:pocket_pal/providers/auth_provider.dart";
+import "package:pocket_pal/providers/menuscreen_provider.dart";
 
 import "package:pocket_pal/constants/dark_theme_const.dart";
 import "package:pocket_pal/constants/light_theme_const.dart";
 
-import "package:pocket_pal/screens/Onboard/onboard.dart";
+import "package:pocket_pal/screens/onboard/onboard.dart";
 
 
 Future<void> main(List<String> arguments) async {
@@ -23,6 +24,7 @@ Future<void> main(List<String> arguments) async {
         ChangeNotifierProvider(create: (context) => ThemeManagerProvider()),
         ChangeNotifierProvider(create: (context) => OnboardProvider()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => MenuScreenProvider())
       ],
       child : const MyApp()
     )

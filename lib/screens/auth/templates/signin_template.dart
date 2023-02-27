@@ -44,143 +44,145 @@ class SignInTemplate extends StatelessWidget{
   @override 
   Widget build(BuildContext context){
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key : formKey,
-            child: SizedBox(
-              width : screenWidth - (screenWidth * 0.16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children : [
-                    
-                  SizedBox(height : screenHeight * .04 ),
-                  RichText(
-                    text : TextSpan(
-                      children : [
-                        TextSpan(
-                          text : "Welcome Back\n",
-                          style : TextStyle(
-                            color : MyColor.black,
-                            fontSize: 34,
-                            fontWeight : FontWeight.w600
-                          )
-                        ),
-                        const TextSpan(text : "You've been missed!" )
-                      ],
-                      style : GoogleFonts.poppins(
-                        color : MyColor.grey,
-                        fontSize : 16,
-                      )
-                    ),
-                  ),
-                
-                  SizedBox( height : screenHeight * 0.06),
-                  PocketPalFormField(
-                    formController : email,
-                    formHintText : "Email Address",
-                    formValidator: (value){
-                      String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-                      final regExp = RegExp(pattern);
-
-                      if (value!.isEmpty) {
-                        return "Email Address Field must not be Empty";
-                      } else if (!regExp.hasMatch(value)) {
-                        return "Please Enter a Valid Email Address";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  
-                  SizedBox( height : screenHeight * 0.02 ),
-                  PocketPalFormField(
-                    formController : password,
-                    formHintText : "Password",
-                    formIsObsecure: obsecure,
-                    formValidator: (value){
-                      final fieldLength = value!.length;
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key : formKey,
+              child: SizedBox(
+                width : screenWidth - (screenWidth * 0.16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children : [
                       
-                      if (value.isEmpty){
-                        return "Password Field must not be Empty";
-                      } else if (fieldLength < 7) {
-                        return "Password must be at least 7 characters long";
-                      } else {
-                        return null;
-                      }
-                    },
-                    formSuffixIcon: IconButton(
-                      icon : Icon(
-                        (obsecure) ? 
-                          FeatherIcons.eye : FeatherIcons.eyeOff
-                      ), 
-                      onPressed: changeObsecure,
-                    ),
-                  ),
-                  
-                  SizedBox( height : screenHeight * 0.02 ),
-                  Align(
-                    alignment : Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap : () => changePage(0),
-                      child: Text(
-                        "Forgot Password?",
-                        style : GoogleFonts.poppins()
+                    SizedBox(height : screenHeight * .04 ),
+                    RichText(
+                      text : TextSpan(
+                        children : [
+                          TextSpan(
+                            text : "Welcome Back\n",
+                            style : TextStyle(
+                              color : MyColor.black,
+                              fontSize: 34,
+                              fontWeight : FontWeight.w600
+                            )
+                          ),
+                          const TextSpan(text : "You've been missed!" )
+                        ],
+                        style : GoogleFonts.poppins(
+                          color : MyColor.grey,
+                          fontSize : 16,
+                        )
                       ),
                     ),
-                  ),
                   
-                  SizedBox( height : screenHeight * 0.02 ),
-                  PocketPalButton(
-                    buttonHeight: 60, 
-                    buttonWidth : screenWidth,
-                    buttonVerticalMargin: screenHeight * .04,
-                    buttonBorderRadius: 10,
-                    buttonColor: MyColor.rustic,
-                    buttonOnTap: (){
-                      final isValid = formKey.currentState!.validate();
-
-                      if (isValid){
-                         authFunction();
-                      }
-                    },
-                    buttonChild: Text(
-                      "Log In",
-                      style : GoogleFonts.poppins(
-                        fontSize : 18,
-                        fontWeight : FontWeight.w600,
-                        color : MyColor.white
-                      )
+                    SizedBox( height : screenHeight * 0.06),
+                    PocketPalFormField(
+                      formController : email,
+                      formHintText : "Email Address",
+                      formValidator: (value){
+                        String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
+                        final regExp = RegExp(pattern);
+      
+                        if (value!.isEmpty) {
+                          return "Email Address Field must not be Empty";
+                        } else if (!regExp.hasMatch(value)) {
+                          return "Please Enter a Valid Email Address";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                  ),
+                    
+                    SizedBox( height : screenHeight * 0.02 ),
+                    PocketPalFormField(
+                      formController : password,
+                      formHintText : "Password",
+                      formIsObsecure: obsecure,
+                      formValidator: (value){
+                        final fieldLength = value!.length;
+                        
+                        if (value.isEmpty){
+                          return "Password Field must not be Empty";
+                        } else if (fieldLength < 7) {
+                          return "Password must be at least 7 characters long";
+                        } else {
+                          return null;
+                        }
+                      },
+                      formSuffixIcon: IconButton(
+                        icon : Icon(
+                          (obsecure) ? 
+                            FeatherIcons.eye : FeatherIcons.eyeOff
+                        ), 
+                        onPressed: changeObsecure,
+                      ),
+                    ),
+                    
+                    SizedBox( height : screenHeight * 0.02 ),
+                    Align(
+                      alignment : Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap : () => changePage(0),
+                        child: Text(
+                          "Forgot Password?",
+                          style : GoogleFonts.poppins()
+                        ),
+                      ),
+                    ),
+                    
+                    SizedBox( height : screenHeight * 0.02 ),
+                    PocketPalButton(
+                      buttonHeight: 60, 
+                      buttonWidth : screenWidth,
+                      buttonVerticalMargin: screenHeight * .04,
+                      buttonBorderRadius: 10,
+                      buttonColor: MyColor.rustic,
+                      buttonOnTap: (){
+                        final isValid = formKey.currentState!.validate();
+      
+                        if (isValid){
+                           authFunction();
+                        }
+                      },
+                      buttonChild: Text(
+                        "Log In",
+                        style : GoogleFonts.poppins(
+                          fontSize : 18,
+                          fontWeight : FontWeight.w600,
+                          color : MyColor.white
+                        )
+                      ),
+                    ),
+                    
+                    SizedBox(height : screenHeight * .12 ),
+                    MyDividerWidget(
+                      dividerName: "or Login In with",
+                      dividerWidth: screenWidth,
+                    ),
+              
+                    SizedBox(height : screenHeight * .04 ),
+                    SocialAuthWidget(
+                      onTapGoogle: (){},
+                      onTapFacebook: (){}, 
+                      onTapGithub: (){}
+                    ),
                   
-                  SizedBox(height : screenHeight * .12 ),
-                  MyDividerWidget(
-                    dividerName: "or Login In with",
-                    dividerWidth: screenWidth,
-                  ),
-            
-                  SizedBox(height : screenHeight * .04 ),
-                  SocialAuthWidget(
-                    onTapGoogle: (){},
-                    onTapFacebook: (){}, 
-                    onTapGithub: (){}
-                  ),
-                
-                
-                  SizedBox(height : screenHeight * .06 ),
-                  MyBottomNavigationWidget(
-                    bottomText: "Don't have an Account? ",
-                    bottomNavigationText: "Sign Up",
-                    bottomOnTap: (){ 
-                      clearForm();
-                      changePage(-1);
-                    }
-                  ),
-                  SizedBox(height : screenHeight * .04 ),
                   
-                  
-                ]
+                    SizedBox(height : screenHeight * .06 ),
+                    MyBottomNavigationWidget(
+                      bottomText: "Don't have an Account? ",
+                      bottomNavigationText: "Sign Up",
+                      bottomOnTap: (){ 
+                        clearForm();
+                        changePage(-1);
+                      }
+                    ),
+                    SizedBox(height : screenHeight * .04 ),
+                    
+                    
+                  ]
+                ),
               ),
             ),
           ),

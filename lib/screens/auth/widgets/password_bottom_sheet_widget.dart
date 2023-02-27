@@ -36,6 +36,8 @@ class MyPasswordBottomSheet extends StatelessWidget {
     final wAuth = context.watch<AuthProvider>();
     final rAuth = context.read<AuthProvider>();
 
+    myFormOnChange(bottomSheetController.text, rAuth);
+
     return Padding(
       padding: EdgeInsets.only(
         top: 30,  
@@ -84,27 +86,9 @@ class MyPasswordBottomSheet extends StatelessWidget {
             formHintText: bottomSheetHintText,
             formIsObsecure: wAuth.getIsObsecure,
             formOnChange: (value){
-              
-              RegExp containsCharacters = RegExp(r'^.{8,}$');
-              RegExp containsUpper = RegExp(r"(?=.*?[A-Z])");
-              RegExp containsLower = RegExp(r"(?=.*?[a-z])");
-              RegExp containsNumerics = RegExp(r"(?=.*?[0-9])");
-              RegExp containsSymbols = RegExp(r"(?=.*?[!@#\$&*~])");
-
-              rAuth.setContainsCharacter(
-                (containsCharacters.hasMatch(value)) ? true : false
-              );
-              rAuth.setContainsUpperLower(
-                (
-                  containsLower.hasMatch(value) &&
-                  containsUpper.hasMatch(value) 
-                ) ? true : false
-              );
-              rAuth.setContainsNumerics(
-                (containsNumerics.hasMatch(value)) ? true : false
-              );
-              rAuth.setContainsSymbol(
-                (containsSymbols.hasMatch(value)) ? true : false
+              myFormOnChange(
+                value,
+                rAuth
               );
             },
             formSuffixIcon: IconButton(
@@ -159,8 +143,31 @@ class MyPasswordBottomSheet extends StatelessWidget {
       ),
     );
   }
-}
 
+  void myFormOnChange(String value, AuthProvider rAuth) {
+    RegExp containsCharacters = RegExp(r'^.{8,}$');
+    RegExp containsUpper = RegExp(r"(?=.*?[A-Z])");
+    RegExp containsLower = RegExp(r"(?=.*?[a-z])");
+    RegExp containsNumerics = RegExp(r"(?=.*?[0-9])");
+    RegExp containsSymbols = RegExp(r"(?=.*?[!@#\$&*~])");
+
+    rAuth.setContainsCharacter(
+      (containsCharacters.hasMatch(value)) ? true : false
+    );
+    rAuth.setContainsUpperLower(
+      (
+        containsLower.hasMatch(value) &&
+        containsUpper.hasMatch(value) 
+      ) ? true : false
+    );
+    rAuth.setContainsNumerics(
+      (containsNumerics.hasMatch(value)) ? true : false
+    );
+    rAuth.setContainsSymbol(
+      (containsSymbols.hasMatch(value)) ? true : false
+    );
+  }
+}
 
 Row passwordValidator({
   Color ? passwordValidatorColor,

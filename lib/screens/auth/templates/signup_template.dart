@@ -50,186 +50,188 @@ class SignUpTemplate extends StatelessWidget{
   @override 
   Widget build(BuildContext context){
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key : formKey,
-            child: SizedBox(
-              width : screenWidth - (screenWidth * 0.16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children : [
-
-                  SizedBox(height : screenHeight * .04 ),
-                  RichText(
-                    text : TextSpan(
-                      children : [
-                        TextSpan(
-                          text : "Create Account\n",
-                          style : TextStyle(
-                            color : MyColor.black,
-                            fontSize: 34,
-                            fontWeight : FontWeight.w600
-                          )
-                        ),
-                        const TextSpan(text : "Sign up to get started!" )
-                      ],
-                      style : GoogleFonts.poppins(
-                        color : MyColor.grey,
-                        fontSize : 16,
-                      )
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key : formKey,
+              child: SizedBox(
+                width : screenWidth - (screenWidth * 0.16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children : [
+      
+                    SizedBox(height : screenHeight * .04 ),
+                    RichText(
+                      text : TextSpan(
+                        children : [
+                          TextSpan(
+                            text : "Create Account\n",
+                            style : TextStyle(
+                              color : MyColor.black,
+                              fontSize: 34,
+                              fontWeight : FontWeight.w600
+                            )
+                          ),
+                          const TextSpan(text : "Sign up to get started!" )
+                        ],
+                        style : GoogleFonts.poppins(
+                          color : MyColor.grey,
+                          fontSize : 16,
+                        )
+                      ),
                     ),
-                  ),
-                
-                  SizedBox( height : screenHeight * 0.06),
-                  PocketPalFormField(
-                    formController : name,
-                    formHintText : "Full Name",
-                    formValidator: (value){
-                      if (value!.isEmpty){
-                        return "Name Field must not be Empty";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-
-                  SizedBox( height : screenHeight * 0.02),
-                  PocketPalFormField(
-                    formController : email,
-                    formHintText : "Email Address",
-                    formValidator: (value) {
-                      String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-                      final regExp = RegExp(pattern);
-
-                      if (value!.isEmpty) {
-                        return "Email Address Field must not be Empty";
-                      } else if (!regExp.hasMatch(value)) {
-                        return "Please Enter a Valid Email Address";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-
-                  SizedBox( height : screenHeight * 0.02 ),
-                  PocketPalFormField(
-                    formController : password,
-                    formHintText : "Password",
-                    formIsReadOnly: true,
-                    formIsObsecure: true,
-                    formValidator: (value) {
-                      if (value!.isEmpty){
-                        return "Password Field must not be Empty";
-                      } else if (value != confirmPassword.text){
-                        return "Password does not Match with the confirm password";
-                      } else {
-                        return null;
-                      }
-                    },
-                    formOnTap: (){
-
-                      showModalBottomSheet(
-                        isScrollControlled: true ,
-                        context: context, 
-                        builder: (context){
-                          return MyPasswordBottomSheet(
-                            formKey: formKey,
-                            screenHeight: screenHeight,
-                            screenWidth: screenWidth,
-                            bottomSheetController: password,
-                            bottomSheetHintText: "Password",
-                          );
-                        }
-                      );
-                      
-                    },
-                  ),
                   
-                  SizedBox( height : screenHeight * 0.02 ),
-                  PocketPalFormField(
-                    formController : confirmPassword,
-                    formHintText : "Confirm Password",
-                    formIsObsecure: true,
-                    formIsReadOnly: true,
-                    formValidator: (value) {
-                      if (value!.isEmpty){
-                        return "Confirm Password Field must not be Empty";
-                      } else if (value != password.text){
-                        return "Confirm Password does not Match with the password";
-                      } else {
-                        return null;
-                      }
-                    },
-                    formOnTap: (){
-                      
-                      showModalBottomSheet(
-                        isScrollControlled: true ,
-                        context: context, 
-                        builder: (context){
-                          return MyPasswordBottomSheet(
-                            formKey: formKey,
-                            screenHeight: screenHeight,
-                            screenWidth: screenWidth,
-                            bottomSheetController: confirmPassword,
-                            bottomSheetHintText: "Confirm Password",
-                          );
+                    SizedBox( height : screenHeight * 0.06),
+                    PocketPalFormField(
+                      formController : name,
+                      formHintText : "Full Name",
+                      formValidator: (value){
+                        if (value!.isEmpty){
+                          return "Name Field must not be Empty";
+                        } else {
+                          return null;
                         }
-                      );
-
-                    },
-                  ),
-                  
-                  SizedBox( height : screenHeight * 0.02 ),
-                  PocketPalButton(
-                    buttonHeight: 60, 
-                    buttonWidth : screenWidth,
-                    buttonVerticalMargin: screenHeight * .04,
-                    buttonBorderRadius: 10,
-                    buttonColor: MyColor.rustic,
-                    buttonOnTap: (){
-                      final isValid = formKey.currentState!.validate();
-
-                      if (isValid){
-                        //  authFunction();
-                      }
-                    },
-                    buttonChild: Text(
-                      "Sign Up",
-                      style : GoogleFonts.poppins(
-                        fontSize : 18,
-                        fontWeight : FontWeight.w600,
-                        color : MyColor.white
-                      )
+                      },
                     ),
-                  ),
+      
+                    SizedBox( height : screenHeight * 0.02),
+                    PocketPalFormField(
+                      formController : email,
+                      formHintText : "Email Address",
+                      formValidator: (value) {
+                        String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
+                        final regExp = RegExp(pattern);
+      
+                        if (value!.isEmpty) {
+                          return "Email Address Field must not be Empty";
+                        } else if (!regExp.hasMatch(value)) {
+                          return "Please Enter a Valid Email Address";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+      
+                    SizedBox( height : screenHeight * 0.02 ),
+                    PocketPalFormField(
+                      formController : password,
+                      formHintText : "Password",
+                      formIsReadOnly: true,
+                      formIsObsecure: true,
+                      formValidator: (value) {
+                        if (value!.isEmpty){
+                          return "Password Field must not be Empty";
+                        } else if (value != confirmPassword.text){
+                          return "Password does not Match with the confirm password";
+                        } else {
+                          return null;
+                        }
+                      },
+                      formOnTap: (){
+      
+                        showModalBottomSheet(
+                          isScrollControlled: true ,
+                          context: context, 
+                          builder: (context){
+                            return MyPasswordBottomSheet(
+                              formKey: formKey,
+                              screenHeight: screenHeight,
+                              screenWidth: screenWidth,
+                              bottomSheetController: password,
+                              bottomSheetHintText: "Password",
+                            );
+                          }
+                        );
+                        
+                      },
+                    ),
+                    
+                    SizedBox( height : screenHeight * 0.02 ),
+                    PocketPalFormField(
+                      formController : confirmPassword,
+                      formHintText : "Confirm Password",
+                      formIsObsecure: true,
+                      formIsReadOnly: true,
+                      formValidator: (value) {
+                        if (value!.isEmpty){
+                          return "Confirm Password Field must not be Empty";
+                        } else if (value != password.text){
+                          return "Confirm Password does not Match with the password";
+                        } else {
+                          return null;
+                        }
+                      },
+                      formOnTap: (){
+                        
+                        showModalBottomSheet(
+                          isScrollControlled: true ,
+                          context: context, 
+                          builder: (context){
+                            return MyPasswordBottomSheet(
+                              formKey: formKey,
+                              screenHeight: screenHeight,
+                              screenWidth: screenWidth,
+                              bottomSheetController: confirmPassword,
+                              bottomSheetHintText: "Confirm Password",
+                            );
+                          }
+                        );
+      
+                      },
+                    ),
+                    
+                    SizedBox( height : screenHeight * 0.02 ),
+                    PocketPalButton(
+                      buttonHeight: 60, 
+                      buttonWidth : screenWidth,
+                      buttonVerticalMargin: screenHeight * .04,
+                      buttonBorderRadius: 10,
+                      buttonColor: MyColor.rustic,
+                      buttonOnTap: (){
+                        final isValid = formKey.currentState!.validate();
+      
+                        if (isValid){
+                          //  authFunction();
+                        }
+                      },
+                      buttonChild: Text(
+                        "Sign Up",
+                        style : GoogleFonts.poppins(
+                          fontSize : 18,
+                          fontWeight : FontWeight.w600,
+                          color : MyColor.white
+                        )
+                      ),
+                    ),
+                    
+                    SizedBox(height : screenHeight * .02 ),
+                    MyDividerWidget(
+                      dividerName: "or Sign Up with",
+                      dividerWidth: screenWidth,
+                    ),
+              
+                    SizedBox(height : screenHeight * .04 ),
+                    SocialAuthWidget(
+                      onTapGoogle: (){},
+                      onTapFacebook: (){}, 
+                      onTapGithub: (){}
+                    ),
                   
-                  SizedBox(height : screenHeight * .02 ),
-                  MyDividerWidget(
-                    dividerName: "or Sign Up with",
-                    dividerWidth: screenWidth,
-                  ),
-            
-                  SizedBox(height : screenHeight * .04 ),
-                  SocialAuthWidget(
-                    onTapGoogle: (){},
-                    onTapFacebook: (){}, 
-                    onTapGithub: (){}
-                  ),
-                
-                  SizedBox(height : screenHeight * .06 ),
-                  MyBottomNavigationWidget(
-                    bottomText: "Already have an Account? ",
-                    bottomNavigationText: "Sign In",
-                    bottomOnTap: (){
-                      clearForm();
-                      changePage(1);
-                    },
-                  ),
-                  SizedBox(height : screenHeight * .04 ),
-                  
-                  
-                ]
+                    SizedBox(height : screenHeight * .06 ),
+                    MyBottomNavigationWidget(
+                      bottomText: "Already have an Account? ",
+                      bottomNavigationText: "Sign In",
+                      bottomOnTap: (){
+                        clearForm();
+                        changePage(1);
+                      },
+                    ),
+                    SizedBox(height : screenHeight * .04 ),
+                    
+                    
+                  ]
+                ),
               ),
             ),
           ),

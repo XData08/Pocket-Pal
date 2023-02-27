@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:pocket_pal/constants/color_const.dart";
-import "package:pocket_pal/screens/Onboard/widgets/pageview_indicator_widget.dart";
+import 'package:pocket_pal/screens/onboard/widgets/pageview_indicator_widget.dart';
 import "package:pocket_pal/screens/auth/auth.dart";
 import "package:provider/provider.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -12,7 +12,7 @@ import "package:pocket_pal/widgets/pocket_pal_button.dart";
 
 import "package:pocket_pal/providers/onboard_provider.dart";
 
-import "package:pocket_pal/screens/Onboard/widgets/pageview_tile_widget.dart";
+import 'package:pocket_pal/screens/onboard/widgets/pageview_tile_widget.dart';
 
 
 class OnboardView extends StatefulWidget {

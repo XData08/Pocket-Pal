@@ -64,87 +64,89 @@ class ForgotPasswordTemplate extends StatelessWidget{
         )
       ),
 
-      body : Center(
-        child: SingleChildScrollView(
-          child: Form(
-            key : formKey,
-            autovalidateMode: AutovalidateMode.always,
-            child: SizedBox(
-              width : screenWidth - (screenWidth * 0.16),
-              child: Column(
-                children : [
-                  Center(
-                    child: SvgPicture.asset(
-                      "assets/svg/forgot_password.svg",
-                      width: screenWidth - (screenWidth * 0.08)
-                    )
-                  ),
-                  
-                  SizedBox( height : screenHeight * .04), 
-                  
-                  RichText(
-                    text : TextSpan(
-                      children : [
-                        TextSpan(
-                          text : "Forgot Password?\n",
-                          style : TextStyle(
-                            color : MyColor.black,
-                            fontSize: 34,
-                            fontWeight : FontWeight.w600
-                          )
-                        ),
-                        const TextSpan(text : "Enter your email below to receive instructions in retrieving your account" )
-                      ],
-                      style : GoogleFonts.poppins(
-                        color : MyColor.grey,
-                        fontSize : 16,
+      body : SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key : formKey,
+              autovalidateMode: AutovalidateMode.always,
+              child: SizedBox(
+                width : screenWidth - (screenWidth * 0.16),
+                child: Column(
+                  children : [
+                    Center(
+                      child: SvgPicture.asset(
+                        "assets/svg/forgot_password.svg",
+                        width: screenWidth - (screenWidth * 0.08)
                       )
                     ),
-                  ),
-                  
-                  SizedBox( height : screenHeight * .03 ),
-                  
-                  PocketPalFormField(
-                    formController : email,  
-                    formHintText : "Email Address",
-                    formValidator: (value){
-                      String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
-                      final regExp = RegExp(pattern);
-
-                      if (value!.isEmpty) {
-                        return "Email Address Field is Empty";
-                      } else if (!regExp.hasMatch(value)) {
-                        return "Please Enter a Valid Email Address";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  
-                  SizedBox( height : screenHeight * 0.03),
-                  PocketPalButton(
-                    buttonHeight: 60, 
-                    buttonWidth: screenWidth, 
-                    buttonBorderRadius: 10,
-                    buttonColor: MyColor.rustic, 
-                    buttonOnTap: (){
-                      final isValid = formKey.currentState!.validate();
-
-                      if (isValid){
-                        authFunction();
-                      }
-                    },
-                    buttonChild: Text(
-                      "Submit",
-                      style : GoogleFonts.poppins(
-                        fontSize : 18,
-                        fontWeight : FontWeight.w700,
-                        color : MyColor.white
-                      )
+                    
+                    SizedBox( height : screenHeight * .04), 
+                    
+                    RichText(
+                      text : TextSpan(
+                        children : [
+                          TextSpan(
+                            text : "Forgot Password?\n",
+                            style : TextStyle(
+                              color : MyColor.black,
+                              fontSize: 34,
+                              fontWeight : FontWeight.w600
+                            )
+                          ),
+                          const TextSpan(text : "Enter your email below to receive instructions in retrieving your account" )
+                        ],
+                        style : GoogleFonts.poppins(
+                          color : MyColor.grey,
+                          fontSize : 16,
+                        )
+                      ),
                     ),
-                  ),
-                  SizedBox( height : screenHeight * 0.04),
-                ]
+                    
+                    SizedBox( height : screenHeight * .03 ),
+                    PocketPalFormField(
+                      formController : email,  
+                      formHintText : "Email Address",
+                      formValidator: (value){
+                        String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
+                        final regExp = RegExp(pattern);
+      
+                        if (value!.isEmpty) {
+                          return "Email Address Field is Empty";
+                        } else if (!regExp.hasMatch(value)) {
+                          return "Please Enter a Valid Email Address";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    
+                    SizedBox( height : screenHeight * 0.03),
+                    PocketPalButton(
+                      buttonHeight: 60, 
+                      buttonWidth: screenWidth, 
+                      buttonBorderRadius: 10,
+                      buttonColor: MyColor.rustic, 
+                      buttonOnTap: (){
+                        final isValid = formKey.currentState!.validate();
+      
+                        if (isValid){
+                          authFunction();
+                          changePage(1);
+                        }
+                      },
+                      buttonChild: Text(
+                        "Submit",
+                        style : GoogleFonts.poppins(
+                          fontSize : 18,
+                          fontWeight : FontWeight.w700,
+                          color : MyColor.white
+                        )
+                      ),
+                    ),
+                    SizedBox( height : screenHeight * 0.04),
+                  ]
+                ),
               ),
             ),
           ),

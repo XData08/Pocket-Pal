@@ -11,6 +11,8 @@ class MyColor {
   static Color ? lightGrey = Colors.grey[300];
   static Color ? grey = Colors.grey[600];
 
+  
+
   // static const Color murky = Color.fromARGB(255, 57, 62, 70);
   // static const Color navy = Color.fromARGB(255, 34, 40, 49);
   // static const Color rustic = Color.fromARGB(255, 214, 90, 49);
