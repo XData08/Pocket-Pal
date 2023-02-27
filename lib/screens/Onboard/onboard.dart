@@ -51,105 +51,107 @@ class _OnboardViewState extends State<OnboardView> {
     final screenWidth = screenSize.width;
 
     return Scaffold(
-      body : Stack(
-        alignment : Alignment.center,
-        children: [
-          PageView.builder(
-            controller: _pageController,
-            onPageChanged: wOnboard.changePage,
-            itemCount : rOnboard.getOnboardLength,
-            itemBuilder: (context, index){
-              return Stack(
-                children: [
-                  Positioned(
-                    width : screenWidth,
-                    height : screenHeight-(screenHeight * .1),
-                    child: MyPageViewTileWidget(
-                      pageViewTileImage: rOnboard.getOnboardItems[index][0], 
-                      pageViewTileTitle: rOnboard.getOnboardItems[index][1], 
-                      pageViewTileDescription: rOnboard.getOnboardItems[index][2], 
-                      screenHeight: screenHeight, 
-                      screenWidth: screenWidth
+      body : SafeArea(
+        child: Stack(
+          alignment : Alignment.center,
+          children: [
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: wOnboard.changePage,
+              itemCount : rOnboard.getOnboardLength,
+              itemBuilder: (context, index){
+                return Stack(
+                  children: [
+                    Positioned(
+                      width : screenWidth,
+                      height : screenHeight-(screenHeight * .1),
+                      child: MyPageViewTileWidget(
+                        pageViewTileImage: rOnboard.getOnboardItems[index][0], 
+                        pageViewTileTitle: rOnboard.getOnboardItems[index][1], 
+                        pageViewTileDescription: rOnboard.getOnboardItems[index][2], 
+                        screenHeight: screenHeight, 
+                        screenWidth: screenWidth
+                      ),
                     ),
-                  ),
-                ],
-              );
-            },
-          ),
-
-          Positioned(
-            top : screenHeight * 0.06,
-            right : (screenWidth * .06),
-            height : screenHeight,
-            child : GestureDetector(
-              onTap: (){
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder : (context) => const AuthView()
-                  )
-                ); 
+                  ],
+                );
               },
-              child : Text(
-                "skip",
-                textAlign : TextAlign.left,
-                style : GoogleFonts.poppins(
-                  color : MyColor.grey,
-                  fontSize : 18,
-                  fontWeight : FontWeight.w500
+            ),
+      
+            Positioned(
+              top : screenHeight * 0.06,
+              right : (screenWidth * .06),
+              height : screenHeight,
+              child : GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder : (context) => const AuthView()
+                    )
+                  ); 
+                },
+                child : Text(
+                  "skip",
+                  textAlign : TextAlign.left,
+                  style : GoogleFonts.poppins(
+                    color : MyColor.grey,
+                    fontSize : 18,
+                    fontWeight : FontWeight.w500
+                  )
                 )
               )
-            )
-          ),
+            ),
+        
+            Positioned(
+              bottom : 0,
+              child: Column(
+                children: [
+                  PocketPalButton(
+                    buttonWidth : screenWidth - (screenWidth * .14),
+                    buttonHeight : screenHeight * .075,
+                    buttonVerticalMargin: screenHeight * .04,
+                    buttonHorizontalMargin: 20,
+                    buttonColor: (wOnboard.getCurrentPage == 2) ? MyColor.rustic : MyColor.lightGrey,
+                    buttonBorderRadius: 10,
+                    buttonOnTap: (){
+                      if (wOnboard.getCurrentPage == 2){
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder : (context) => const AuthView()
+                          )
+                        );
+                      }
       
-          Positioned(
-            bottom : 0,
-            child: Column(
-              children: [
-                PocketPalButton(
-                  buttonWidth : screenWidth - (screenWidth * .14),
-                  buttonHeight : screenHeight * .075,
-                  buttonVerticalMargin: screenHeight * .04,
-                  buttonHorizontalMargin: 20,
-                  buttonColor: (wOnboard.getCurrentPage == 2) ? MyColor.rustic : MyColor.lightGrey,
-                  buttonBorderRadius: 10,
-                  buttonOnTap: (){
-                    if (wOnboard.getCurrentPage == 2){
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder : (context) => const AuthView()
-                        )
+                      _pageController.animateToPage(
+                        rOnboard.getCurrentPage + 1, 
+                        duration: const Duration( milliseconds: 300 ), 
+                        curve: Curves.easeOutCubic
                       );
-                    }
-
-                    _pageController.animateToPage(
-                      rOnboard.getCurrentPage + 1, 
-                      duration: const Duration( milliseconds: 300 ), 
-                      curve: Curves.easeOutCubic
-                    );
-                  },
-                  buttonChild: Text(
-                    (wOnboard.getCurrentPage == 2) ? "Get Started!" : "Next",
-                    style : GoogleFonts.poppins(
-                      color : (wOnboard.getCurrentPage == 2) ? MyColor.white : MyColor.black,
-                      fontSize : 18,
-                      fontWeight: FontWeight.w600
-                    )
+                    },
+                    buttonChild: Text(
+                      (wOnboard.getCurrentPage == 2) ? "Get Started!" : "Next",
+                      style : GoogleFonts.poppins(
+                        color : (wOnboard.getCurrentPage == 2) ? MyColor.white : MyColor.black,
+                        fontSize : 18,
+                        fontWeight: FontWeight.w600
+                      )
+                    ),
                   ),
-                ),
-
-                SizedBox(
-                  width : 66,
-                  height : 12,
-                  child: MyPageViewIndicatorWidget(
-                    pageViewItemLength: rOnboard.getOnboardLength,
-                    pageViewCurrentPage : wOnboard.getCurrentPage,
+      
+                  SizedBox(
+                    width : 66,
+                    height : 12,
+                    child: MyPageViewIndicatorWidget(
+                      pageViewItemLength: rOnboard.getOnboardLength,
+                      pageViewCurrentPage : wOnboard.getCurrentPage,
+                    ),
                   ),
-                ),
-                SizedBox( height : screenHeight * .04)
-              ],
+                  SizedBox( height : screenHeight * .04)
+                ],
+              )
             )
-          )
-        ],
+          ],
+        ),
       )
     );
   }

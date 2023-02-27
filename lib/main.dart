@@ -11,6 +11,7 @@ import "package:pocket_pal/constants/dark_theme_const.dart";
 import "package:pocket_pal/constants/light_theme_const.dart";
 
 import "package:pocket_pal/screens/onboard/onboard.dart";
+import "package:pocket_pal/screens/auth/auth.dart";
 
 
 Future<void> main(List<String> arguments) async {

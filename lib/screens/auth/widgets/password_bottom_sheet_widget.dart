@@ -149,7 +149,7 @@ class MyPasswordBottomSheet extends StatelessWidget {
     RegExp containsUpper = RegExp(r"(?=.*?[A-Z])");
     RegExp containsLower = RegExp(r"(?=.*?[a-z])");
     RegExp containsNumerics = RegExp(r"(?=.*?[0-9])");
-    RegExp containsSymbols = RegExp(r"(?=.*?[!@#\$&*~])");
+    RegExp containsSymbols = RegExp(r"(?=.*?[!@#\$&*~._,<>+-])");
 
     rAuth.setContainsCharacter(
       (containsCharacters.hasMatch(value)) ? true : false

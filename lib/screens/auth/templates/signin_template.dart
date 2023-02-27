@@ -142,7 +142,7 @@ class SignInTemplate extends StatelessWidget{
                         final isValid = formKey.currentState!.validate();
       
                         if (isValid){
-                           authFunction();
+                          authFunction();
                         }
                       },
                       buttonChild: Text(

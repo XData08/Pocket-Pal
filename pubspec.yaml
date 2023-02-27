@@ -44,6 +44,7 @@ dependencies:
   flutter_feather_icons: ^2.0.0+1
   flutter_zoom_drawer: ^3.0.3
   hidden_drawer_menu: ^3.0.1
+  shared_preferences: ^2.0.18
 
 dev_dependencies:
   flutter_test:
