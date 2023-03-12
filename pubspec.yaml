@@ -45,6 +45,7 @@ dependencies:
   flutter_zoom_drawer: ^3.0.3
   hidden_drawer_menu: ^3.0.1
   shared_preferences: ^2.0.18
+  google_sign_in: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,8 @@ flutter:
     - assets/icon/Facebook.svg
     - assets/icon/Github.svg
     - assets/icon/Google.svg
+    - assets/icon/Menu.svg
+    - assets/icon/Folder.svg
 
     - assets/images/Splash.png
   #   - images/a_dot_burr.jpeg

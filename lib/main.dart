@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:firebase_core/firebase_core.dart";
 
+import "package:pocket_pal/providers/settings_provider.dart";
+import "package:pocket_pal/providers/dashboard_provider.dart";
 import "package:pocket_pal/providers/onboard_provider.dart";
 import "package:pocket_pal/providers/theme_manager_provider.dart";
 import "package:pocket_pal/providers/auth_provider.dart";
@@ -22,12 +24,37 @@ Future<void> main(List<String> arguments) async {
   runApp(
     MultiProvider(
       providers : [
-        ChangeNotifierProvider(create: (context) => ThemeManagerProvider()),
-        ChangeNotifierProvider(create: (context) => OnboardProvider()),
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => MenuScreenProvider())
+
+        ChangeNotifierProvider(
+          create: (context) => ThemeManagerProvider()
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => OnboardProvider()
+        ),
+        
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider()
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => MenuScreenProvider()
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => PersonalFolderProvider()
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => GroupFolderProvider()
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => SettingsProvider()
+        ),
+
       ],
-      child : const MyApp()
+      child : const PocketPalApp()
     )
   );
 
@@ -35,13 +62,21 @@ Future<void> main(List<String> arguments) async {
 }
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({ super.key });
+class PocketPalApp extends StatelessWidget {
+  const PocketPalApp({ super.key });
 
   @override 
   Widget build(BuildContext context){
 
     final theme = context.watch<ThemeManagerProvider>().getTheme;
+    final wSettings = context.watch<SettingsProvider>();
+    final rSettings = context.read<SettingsProvider>();
+
+    final showOnboard = wSettings.getFirstInstall;
+
+    if (showOnboard){
+      rSettings.setDefault();
+    }
 
     return MaterialApp(
       title : "Pocket Pal",
@@ -51,7 +86,10 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode : theme,
 
-      home: const OnboardView(),
+      home: (showOnboard) ? 
+        const OnboardView() : const AuthView(),
     );
   }
-}
+}   
+
+

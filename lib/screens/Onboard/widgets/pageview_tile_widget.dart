@@ -27,13 +27,14 @@ class MyPageViewTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Column(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children : [
         SvgPicture.asset(
           pageViewTileImage,
           width: screenWidth - 100,
         ),
-
+    
         SizedBox( height : screenHeight * .06),
         Text(
           pageViewTileTitle,
@@ -43,7 +44,7 @@ class MyPageViewTileWidget extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-
+    
         SizedBox( height : screenHeight * .04),
         Text(
           pageViewTileDescription,

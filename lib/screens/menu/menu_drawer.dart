@@ -19,7 +19,7 @@ class MenuDrawerView extends StatelessWidget {
     final rMenuItems = context.read<MenuScreenProvider>();
     final wMenuItems = context.watch<MenuScreenProvider>();
 
-    final width = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return ZoomDrawer(
       menuBackgroundColor: MyColor.black!,
@@ -41,8 +41,8 @@ class MenuDrawerView extends StatelessWidget {
             }),
         ),
 
-      slideWidth: width * 0.75,
-      menuScreenWidth: width * 0.7,
+      slideWidth: screenWidth * 0.75,
+      menuScreenWidth: screenWidth * 0.7,
       mainScreenScale: 0.2,
     );
   }
