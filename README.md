@@ -1,6 +1,6 @@
 # pocket_pal
 
-A new Flutter project.
+Hello World!!
 
 ## Getting Started
 
