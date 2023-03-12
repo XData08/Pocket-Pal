@@ -10,7 +10,7 @@ import "package:pocket_pal/widgets/pocket_pal_menu_item.dart";
 class MenuScreenProvider with ChangeNotifier {
 
   PocketPalMenuItem _currentPage = const PocketPalMenuItem(
-      "Home", 
+      "Dashboard", 
       FeatherIcons.home,
       DashboardView()
     );

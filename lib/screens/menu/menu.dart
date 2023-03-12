@@ -2,16 +2,20 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:provider/provider.dart";
 import "package:firebase_auth/firebase_auth.dart";
+// import "package:cloud_firestore/cloud_firestore.dart";
+import "package:google_sign_in/google_sign_in.dart";
 
 import "package:pocket_pal/screens/menu/widgets/logout_button_widget.dart";
 import "package:pocket_pal/screens/menu/widgets/profile_widget.dart";
+
 import "package:pocket_pal/widgets/pocket_pal_menu_item.dart";
 
 import "package:pocket_pal/providers/menuscreen_provider.dart";
+
 import "package:pocket_pal/constants/color_const.dart";
 
 
-class MenuView extends StatefulWidget {
+class MenuView extends StatelessWidget {
   final PocketPalMenuItem currentItem;
   final ValueChanged<PocketPalMenuItem> onSelectedItem;
 
@@ -22,18 +26,12 @@ class MenuView extends StatefulWidget {
     });
 
   @override
-  State<MenuView> createState() => _MenuViewState();
-}
-
-class _MenuViewState extends State<MenuView> {
-  @override
   Widget build(BuildContext context) {
 
     final menuItems = context.read<MenuScreenProvider>().getPocketPalMenuItems;
-    
+
     final size = MediaQuery.of(context).size;
-    final height = size.height;
-    final width = size.width;
+    final screenHeight = size.height;
 
     return Scaffold(
       backgroundColor: MyColor.black,
@@ -43,14 +41,15 @@ class _MenuViewState extends State<MenuView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: height * 0.08),
+              SizedBox(height: screenHeight * 0.08),
               
               MyProfileWidget(
-                profileName: "${FirebaseAuth.instance.currentUser!.email!}", 
-                nickname: 'iampaula123'),
+                profileName: "  ", 
+                nickname: "",
+              ),
             
               SizedBox(
-                height: 80,
+                height: screenHeight * 0.08,
                 child: Divider(
                   color: MyColor.lightGrey,
                   thickness: 0.8,
@@ -61,12 +60,13 @@ class _MenuViewState extends State<MenuView> {
 
               const Spacer(),
               GestureDetector(
-                onTap : (){
-                  FirebaseAuth.instance.signOut();
+                onTap : () async {
+                  await GoogleSignIn().signOut();
+                  await FirebaseAuth.instance.signOut();
                 },
                 child: const MyLogoutButtonWidget()
               ),
-              const SizedBox(height: 50,),
+              SizedBox(height: screenHeight * 0.05,),
             ],
           ),
         ),  
@@ -91,8 +91,8 @@ class _MenuViewState extends State<MenuView> {
 
       selectedTileColor: MyColor.rustic,
       minLeadingWidth: 35,
-      selected: widget.currentItem == item,
-      onTap: () => widget.onSelectedItem(item),
+      selected: currentItem == item,
+      onTap: () => onSelectedItem(item),
     ),
     );
 }

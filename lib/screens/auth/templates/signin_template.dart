@@ -14,6 +14,7 @@ import "package:pocket_pal/screens/auth/widgets/bottom_navigation_widget.dart";
 class SignInTemplate extends StatelessWidget{
   final void Function(int) changePage;
   final Future<void> Function() authFunction;
+  final Future<void> Function() ? googleAuth;
   final void Function() clearForm;
 
   final GlobalKey<FormState> formKey;
@@ -39,6 +40,7 @@ class SignInTemplate extends StatelessWidget{
     required this.obsecure,
     required this.changeObsecure,
     required this.clearForm,
+    required this.googleAuth,
   });
 
   @override 
@@ -163,7 +165,7 @@ class SignInTemplate extends StatelessWidget{
               
                     SizedBox(height : screenHeight * .04 ),
                     SocialAuthWidget(
-                      onTapGoogle: (){},
+                      onTapGoogle: googleAuth,
                       onTapFacebook: (){}, 
                       onTapGithub: (){}
                     ),

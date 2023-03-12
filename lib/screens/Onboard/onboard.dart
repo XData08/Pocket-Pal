@@ -1,18 +1,17 @@
 import "package:flutter/material.dart";
-import "package:pocket_pal/constants/color_const.dart";
-import 'package:pocket_pal/screens/onboard/widgets/pageview_indicator_widget.dart';
-import "package:pocket_pal/screens/auth/auth.dart";
 import "package:provider/provider.dart";
 import "package:google_fonts/google_fonts.dart";
 
-// import "package:pocket_pal/screens/auth/auth.dart";
+import "package:pocket_pal/constants/color_const.dart";
+import 'package:pocket_pal/screens/onboard/widgets/pageview_indicator_widget.dart';
 import "package:pocket_pal/screens/auth/auth.dart";
+
+import "package:pocket_pal/providers/onboard_provider.dart";
+import "package:pocket_pal/providers/settings_provider.dart";
 
 import "package:pocket_pal/widgets/pocket_pal_button.dart";
 
-import "package:pocket_pal/providers/onboard_provider.dart";
-
-import 'package:pocket_pal/screens/onboard/widgets/pageview_tile_widget.dart';
+import "package:pocket_pal/screens/onboard/widgets/pageview_tile_widget.dart";
 
 
 class OnboardView extends StatefulWidget {
@@ -45,6 +44,8 @@ class _OnboardViewState extends State<OnboardView> {
 
     final wOnboard = context.watch<OnboardProvider>();
     final rOnboard = context.read<OnboardProvider>();
+
+    final rSettings = context.read<SettingsProvider>();
     
     final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
@@ -64,7 +65,7 @@ class _OnboardViewState extends State<OnboardView> {
                   children: [
                     Positioned(
                       width : screenWidth,
-                      height : screenHeight-(screenHeight * .1),
+                      height : screenHeight-(screenHeight * .18),
                       child: MyPageViewTileWidget(
                         pageViewTileImage: rOnboard.getOnboardItems[index][0], 
                         pageViewTileTitle: rOnboard.getOnboardItems[index][1], 
@@ -79,11 +80,13 @@ class _OnboardViewState extends State<OnboardView> {
             ),
       
             Positioned(
-              top : screenHeight * 0.06,
+              top : screenHeight * 0.02,
               right : (screenWidth * .06),
               height : screenHeight,
               child : GestureDetector(
                 onTap: (){
+                  rSettings.setFirstInstall = false;
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder : (context) => const AuthView()
@@ -115,13 +118,15 @@ class _OnboardViewState extends State<OnboardView> {
                     buttonBorderRadius: 10,
                     buttonOnTap: (){
                       if (wOnboard.getCurrentPage == 2){
+                        rSettings.setFirstInstall = false;
+                        
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder : (context) => const AuthView()
                           )
                         );
                       }
-      
+                  
                       _pageController.animateToPage(
                         rOnboard.getCurrentPage + 1, 
                         duration: const Duration( milliseconds: 300 ), 
@@ -137,7 +142,7 @@ class _OnboardViewState extends State<OnboardView> {
                       )
                     ),
                   ),
-      
+                  
                   SizedBox(
                     width : 66,
                     height : 12,

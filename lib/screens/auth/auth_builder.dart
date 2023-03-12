@@ -1,6 +1,8 @@
 import "package:flutter/material.dart"; 
 import "package:firebase_auth/firebase_auth.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:provider/provider.dart";
+import "package:google_sign_in/google_sign_in.dart";
 
 import "package:pocket_pal/screens/auth/templates/forgot_password_template.dart";
 import "package:pocket_pal/screens/auth/templates/signup_template.dart";
@@ -60,11 +62,17 @@ class _AuthViewBuilderState extends State<AuthViewBuilder> {
       email: email, 
       password: password
     );
+
+    final database = FirebaseFirestore.instance.collection("users");
+    await database.add({
+      "full name" : _name.text.trim(),
+      "email" : _email.text.trim()
+    });
     return;
   }
 
   Future<void> signInUser() async {
-
+    
     final String email = _email.text.trim();
     final String password = _password.text.trim();
 
@@ -80,6 +88,22 @@ class _AuthViewBuilderState extends State<AuthViewBuilder> {
 
     await FirebaseAuth.instance.sendPasswordResetEmail(
       email: email
+    );
+    return;
+  }
+
+  Future<void> signInWithGoogle() async{
+    
+    GoogleSignInAccount ? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication ? googleAuth = await googleUser!.authentication;
+
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken
+    );
+    
+    await FirebaseAuth.instance.signInWithCredential(
+      credential
     );
     return;
   }
@@ -109,6 +133,7 @@ class _AuthViewBuilderState extends State<AuthViewBuilder> {
         obsecure : wAuth.getIsObsecure,
         changeObsecure : rAuth.changeObsecure,
         clearForm: clearForm,
+        googleAuth : signInWithGoogle, 
       );
     } else if (wAuth.getCurrentPage == 1){
       // Sign In Template
@@ -123,6 +148,7 @@ class _AuthViewBuilderState extends State<AuthViewBuilder> {
         obsecure : wAuth.getIsObsecure,
         changeObsecure : rAuth.changeObsecure,
         clearForm: clearForm,
+        googleAuth : signInWithGoogle, 
       );
     } else {
       // Forgot Password Template
